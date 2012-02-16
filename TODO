@@ -1,0 +1,20 @@
+TODO LIST
+
+general
+-------
+
+#Mettre en place un fichier de conf !
+#Ajouter une licence GPL (GPL v2 ?)
+#Mettre des logs via le module logging !
+
+
+core.py
+-------
+
+#Ajouter des explications
+#Ajouter le codinng utf-8
+
+cursegui.py
+-----------
+
+#Ajouter le coding utf-8
