@@ -11,6 +11,33 @@ import os
 import operator
 import ConfigParser
 
+class Game():
+  def __init__(self, config):
+    #On instancie notre classe Config
+    self.config = config #Config()
+
+    #On instancie notre classe HighScore
+    self.highscore = HighScore()
+    
+    #On instancie notre classe Apple
+    x = self.config.rawConfig.getint("GLOBAL", "x")
+    y = self.config.rawConfig.getint("GLOBAL", "y")    
+    self.apple = Apple(x, y)
+
+
+  def join(self):
+    '''
+    Le joueur courant rejoint la partie
+    '''
+    #On instancie notre Snake en lui indiquant sa position par defaut
+    #et sa taille par defaut
+    self.snake = Snake([30,7], 2)
+    
+    #On instancie notre Joueur
+    self.player = Player()    
+    self.player.setName(self.config.rawConfig.get("PLAYER", "name"))
+    
+  
 class Player():
 	"""
 	Creation de la classe Player
@@ -47,7 +74,7 @@ class HighScore():
 		"""
 		#On charge notre fichier pickle si il existe,
 		#sinon on le creer
-		self.oFullPath = 'highscore.pkl'
+		self.oFullPath = 'highspkl'
 		if os.path.isfile(self.oFullPath):
 			self.highScore = cPickle.load(open(self.oFullPath, 'rb'))
 		else:
@@ -83,7 +110,7 @@ class HighScore():
 		#ou contient deja des valeurs
 		#
 		
-		return sorted(self.highScore.iteritems(), key=operator.itemgetter(1), reverse=True)
+		return sorted(self.highSiteritems(), key=operator.itemgetter(1), reverse=True)
 
 class Snake():
 	"""
