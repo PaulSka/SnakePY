@@ -110,7 +110,7 @@ class HighScore():
 		#ou contient deja des valeurs
 		#
 		
-		return sorted(self.highSiteritems(), key=operator.itemgetter(1), reverse=True)
+		return sorted(self.highScore.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 class Snake():
 	"""
