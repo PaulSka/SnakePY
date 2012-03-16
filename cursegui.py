@@ -95,12 +95,33 @@ def showHG():
     win.addstr(4, 4, 'SnakePY HighScore')
     win.addstr(5, 4, 'Press 1 to return previous menu')
     #On boucle sur les HighScore
-    y = 7
+    x = 7
     for hg in game.highscore.showHighScore():
-        win.addstr(y, 4, "%s -- %s" %(hg[0], hg[1]))
-    x = 0
-    while x!= ord('1'):
-        x = win.getch()
+        win.addstr(x, 4, "%s -- %s" %(hg[0], hg[1]))
+        x+=1
+    stop = 0
+    while stop!= ord('1'):
+        stop = win.getch()
+    menu()
+    return
+
+def showCredits():
+    import time
+    clearScreen()    
+    win.addstr(4, 4, 'SnakePY Credits')
+    win.addstr(5, 4, 'Press 1 to return previous menu')
+    x = 7
+    #On charge le fichier credits
+    f = open('CREDITS', 'rb')
+    #On recupere la ligne
+    lines = f.readlines()    
+    #On affiche les lignes
+    for line in lines:
+        win.addstr(x, 4, line.strip())
+        x+=1
+    stop = 0
+    while stop!= ord('1'):
+        stop = win.getch()
     menu()
     return
     
@@ -112,13 +133,14 @@ def menu():
     clearScreen()
 
     #On boucle pour le menu    
-    while x!= ord('3'):
+    while x!= ord('4'):
         #On ajoute les entrees
         win.addstr(4, 4, 'SnakePY')
         win.addstr(5, 4, 'Choose option')
         win.addstr(6, 4, '1. Launch game')
         win.addstr(7, 4, '2. Show HighScore')
-        win.addstr(8, 4, '3. Exit game')
+        win.addstr(8, 4, '3. Credits')
+        win.addstr(9, 4, '4. Exit game')
         #On recupere la touche appuye par l'utilisateur
         x = win.getch()
         if x == ord('1'):
@@ -126,7 +148,8 @@ def menu():
             launchGame()
         if x == ord('2'):
             showHG()
-
+        if x == ord('3'):
+            showCredits()
     return    
 
 #On initialise notre fenetre
