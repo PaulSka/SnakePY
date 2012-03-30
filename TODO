@@ -1,20 +1,8 @@
 TODO LIST
 
-general
--------
+##A mettre dans les issues
+#[CORE] Ajout de traduction
+#[CORE] Ajout dans le fichier de conf du 'mappage' des touches
+#[CORE] Utiliser dans le mappage le nom de la touche et non pas son numéro (ex:fleche gauche = 260)
 
-#Mettre en place un fichier de conf !
-#Ajouter une licence GPL (GPL v2 ?)
-#Mettre des logs via le module logging !
-
-
-core.py
--------
-
-#Ajouter des explications
-#Ajouter le codinng utf-8
-
-cursegui.py
------------
-
-#Ajouter le coding utf-8
+Voir les issues sur le dépôt gitHub (SnakePy)

@@ -1,3 +1,12 @@
+#################### V0.0.3
+* Refonte de la partie cursegui.py
+* Fix lors d'un erreur du script qui 'crash' le terminal pour le cursegui.py
+
+#################### V0.0.2
+* Mise en place de la page GAMEOVER
+* Possibiliter de faire de nouvelle partie sans sortie du script
+* Ajout de l'argument -n au lancement du script pour forcer un pseudo
+
 #################### V0.0.1
 * Mise en place de la page CREDITS
 * Mise en place de la page CHANGELOG
