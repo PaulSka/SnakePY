@@ -1,3 +1,6 @@
+#################### V0.0.4
+* Fix de l'affichage de la page de CREDITS dans le cursegui.y
+
 #################### V0.0.3
 * Refonte de la partie cursegui.py
 * Fix lors d'un erreur du script qui 'crash' le terminal pour le cursegui.py

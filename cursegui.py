@@ -15,6 +15,9 @@ import sys
 global config, game
 
 def initCurse():
+    """
+    Fonction permetttant l'initialisation de Curses()
+    """
     #On initialise notre fenêtre
     curses.initscr()
     #Couleur active !
@@ -27,12 +30,22 @@ def initCurse():
 
 
 def closeCurse():
+    """
+    Fonction permettant de fermer 'proprement' Curses()
+    """
     #On détruit les fenêtres curses
     curses.endwin()
     #On sort du script
     exit()
 
 def loadLogo():
+    """
+    Fonction permettant de charger
+    le logo.
+    Cette fonction retourne l'ensemble
+    des lignes contenues dans le fichier
+    ASCII.art
+    """
     #On charge le fichier logo
     f = open('ASCII.art', 'rb')
     #On recupere les lignes
@@ -43,7 +56,8 @@ def loadLogo():
 
 def createNewWin(curses):
     """
-    On créer une nouvelle fenetre Curse
+    Fonction permettant de créer une nouvelle
+    fenêtre Curses()
     """
 
     #On dimensionne notre fenetre
@@ -68,7 +82,9 @@ def destroyWin():
     curses.endwin()
 
 def menu():
-
+    """
+    Fonction permettant l'affichage du menu
+    """
     #On créer une nouvelle fenetre
     win = createNewWin(curses)
 
@@ -81,6 +97,7 @@ def menu():
     win.border(0)
 
     chooseMenu = 0    
+
     #On ajoute les entrées
     win.addstr(1, 4, 'SnakePY', curses.color_pair(1))
     win.addstr(2, 4, 'Choose option', curses.color_pair(1))
@@ -90,6 +107,7 @@ def menu():
     win.addstr(6, 4, '4. Exit game', curses.color_pair(1))
     win.addstr(7, 4, '')
 
+    #On effectue une boucle
     while chooseMenu != ord('4'):
         #On récupere la touche appuyée par l'utilisateur
         chooseMenu = win.getch()
@@ -117,7 +135,7 @@ def menu():
     
 def launchGame():
     """
-    Génére une nouvelle fenêtre curse et lance le jeu
+    Fonction propre au jeu
     """    
     # On rejoint la partie
     game.join()
@@ -137,7 +155,7 @@ def launchGame():
     #On effectue une boucle infinie tant que la touche Echap (27) n'est pas
     #pressée.
     while key != 27:
-        #On ajoutte le score a la ligne 0, colonne 2
+        #On ajoute le score a la ligne 0, colonne 2
         #Le score est calcule en recuperant la longueur du serpent actuel
         #et en retirant 2 (sa valeur initiale)	
         win.addstr(0,2,' Joueur : %s Score : %s ' %(game.player.name, str(game.player.score)), curses.color_pair(1))
@@ -165,7 +183,7 @@ def launchGame():
 
         #Si on passe sur un element O	
         elif win.inch(game.snake.oSnake[0][1],game.snake.oSnake[0][0]) & 255 == ord('O'):
-            #On ajoutte 1 point a notre Joueur
+            #On ajoute 1 point a notre Joueur
             game.player.addPoint()
 
             #On recalcule des nouvelles coordonnees pour la pomme
@@ -193,12 +211,13 @@ def launchGame():
 
 def showGameOver():
     """
-    Affiche l'écran GameOver
+    Fonction permettant l'affichage du score
     """
 
     #On créer une nouvelle fenetre
     win = createNewWin(curses)
 
+    #On affiche le texte
     win.addstr(1, 4, 'GAME OVER', curses.color_pair(3))
     win.addstr(2, 4, 'Your Score', curses.color_pair(1))    
     win.addstr(3, 4, '%s - %s' %(game.player.name, game.player.score), curses.color_pair(1))
@@ -225,12 +244,13 @@ def showGameOver():
 
 def showHG():
     """
-    Affiche l'écran de highscore
+    Fonction permettant d'afficher le HighScore
     """
 
     #On créer une nouvelle fenetre
     win = createNewWin(curses)
     
+    #On affiche le texte
     win.addstr(1, 4, 'SnakePY HighScore', curses.color_pair(1))
     win.addstr(2, 4, 'Press 1 to return previous menu', curses.color_pair(1))
     win.addstr(3, 4, '')
@@ -240,7 +260,7 @@ def showHG():
     i = 4
     #Pour chaque entrée dans le highscore...
     for hg in game.highscore.showHighScore():
-        #On ajoutte une ligne
+        #On ajoute une ligne
         win.addstr(i, 4, "%s -- %s" %(hg[0], hg[1]), curses.color_pair(1))
         i+=1
 
@@ -260,31 +280,54 @@ def showHG():
 
 def showCredits():
     """
-    Affiche les crédits via le fichier CREDITS
+    Fonction permettant d'afficher la page de crédits
     """
+
+    def show(win, lines):
+        i = 4
+        for j in range(10):
+            win.addstr(j+4, 4, ' '*(config.rawConfig.getint("GLOBAL", "y") - 8))
+
+        for line in lines:
+            win.addstr(i, 4, line.strip(), curses.color_pair(1))
+            i += 1
+        win.refresh()
 
     #On créer une nouvelle fenetre
     win = createNewWin(curses)
 
+    #On ajoute nos valeurs
     win.addstr(1, 4, 'CREDITS', curses.color_pair(1))
     win.addstr(2, 4, 'Press 1 to return previous menu', curses.color_pair(1))
     win.addstr(3, 4, '')
 
+
     #On charge le fichier credits
     f = open('CREDITS', 'rb')
     #On recupere les lignes
-    lines = f.readlines()    
-    #Pour chaque ligne présentes....
-    i = 4
+    lines = f.readlines()
+    #On récupére le nombre de lignes
+    countLines = len(lines)
+
+    #Calcul nécessaire pour l'affichage des crédits
+    maxX = 10
+    current = 0
+    showLines = []
     for line in lines:
-        #...on ajoutte les infos en supprimant les 'blancs' (strip())
-        win.addstr(i, 4, line.strip(), curses.color_pair(1))
-        i+=1
-    chooseMenu = 0
+        showLines.append(line)
+
+    #Pour chaque ligne présentes....
+    show(win, showLines[current:current+maxX])
+    current+=10
+
+    key = 0
     #Tant que la touche 1 n'est pas pressée...
-    while chooseMenu!= ord('1'):
+    while key != ord('1'):
         #On attend et on 'hook' les touches
-        chooseMenu = win.getch()
+        key = win.getch()
+        if key == curses.KEY_DOWN:
+            show(win, showLines[current:current+maxX])
+            current+=10
 
     #Si on sort de la boucle (1), alors on
     #détruit les fenetres
@@ -324,4 +367,3 @@ except:
     #On ferme curse
     closeCurse()
     sys.exit("Error")
-
